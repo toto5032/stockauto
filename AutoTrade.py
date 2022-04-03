@@ -253,9 +253,9 @@ def sell_all():
 
 if __name__ == '__main__': 
     try:
-        symbol_list = ['A031820', 'A010140']
+        symbol_list = ['A031820', 'A010140', 'A002070', 'A002900','A005360','A014990']
         bought_list = []     # 매수 완료된 종목 리스트
-        target_buy_count = 2 # 매수할 종목 수
+        target_buy_count = 6 # 매수할 종목 수
         buy_percent = 0.5   
         printlog('check_creon_system() :', check_creon_system())  # 크레온 접속 점검
         stocks = get_stock_balance('ALL')      # 보유한 모든 종목 조회
