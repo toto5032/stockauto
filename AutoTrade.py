@@ -2,9 +2,7 @@ import os, sys, ctypes
 import win32com.client
 import pandas as pd
 from datetime import datetime
-from slacker import Slacker
 import time, calendar
-
 import requests
  
 def post_message(token, channel, text):
@@ -14,8 +12,6 @@ def post_message(token, channel, text):
     )
     print(response)
  
-myToken = "xoxb-3317909669731-3311300755430-TAWChGJRZKQ44YF7ANtE1KcN"
-
 def dbgout(message):
     """인자로 받은 문자열을 파이썬 셸과 슬랙으로 동시에 출력한다."""
     print(datetime.now().strftime('[%m/%d %H:%M:%S]'), message)
@@ -240,6 +236,7 @@ def sell_all():
                     cpOrder.SetInputValue(7, "1")   # 조건 0:기본, 1:IOC, 2:FOK
                     cpOrder.SetInputValue(8, "12")  # 호가 12:최유리, 13:최우선 
                     # 최유리 IOC 매도 주문 요청
+
                     ret = cpOrder.BlockRequest()
                     printlog('최유리 IOC 매도', s['code'], s['name'], s['qty'], 
                         '-> cpOrder.BlockRequest() -> returned', ret)
@@ -253,10 +250,20 @@ def sell_all():
 
 if __name__ == '__main__': 
     try:
-        symbol_list = ['A031820', 'A010140', 'A002070', 'A002900','A005360','A014990']
+        myToken = "xoxb-3317909669731-3311300755430-n12eYxxsq5iIni6IVTfgII8w"
+        symbol_list = ['A031820', #콤텍
+                       'A010140', #삼성중공업                
+                       'A002070', #비비안
+                       'A002900', #TYM
+                       'A005360', #모나미
+                       'A039610', #화성밸브
+                       'A344050', #신영스펙5호
+                       'A060200', #뉴보텍
+                       'A079980', #휴비스
+                       'A000970'] #한국주철관
         bought_list = []     # 매수 완료된 종목 리스트
-        target_buy_count = 6 # 매수할 종목 수
-        buy_percent = 0.5   
+        target_buy_count = 10 # 매수할 종목 수
+        buy_percent = 0.1   
         printlog('check_creon_system() :', check_creon_system())  # 크레온 접속 점검
         stocks = get_stock_balance('ALL')      # 보유한 모든 종목 조회
         total_cash = int(get_current_cash())   # 100% 증거금 주문 가능 금액 조회
