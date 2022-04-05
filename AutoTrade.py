@@ -250,7 +250,7 @@ def sell_all():
 
 if __name__ == '__main__': 
     try:
-        myToken = "xoxb-3317909669731-3311300755430-n12eYxxsq5iIni6IVTfgII8w"
+        myToken = "xoxb-3317909669731-3311300755430-18hEXSpx3BRGwMKRtwzqR1Sr"
         #콤텍, 삼성중공업, 비비안, TYM, 모나미, 화성밸브, 신영스펙5, 성우전자, 휴비스, 한국주철관
         symbol_list = ['A031820', 'A010140','A002070', 'A002900', 'A005360', 'A039610', 'A323280', 'A081580','A079980', 'A000970']
         bought_list = []     # 매수 완료된 종목 리스트
@@ -284,7 +284,7 @@ if __name__ == '__main__':
                     if len(bought_list) < target_buy_count:
                         buy_etf(sym)
                         time.sleep(1)
-                if t_now.minute == 30 and 0 <= t_now.second <= 5: 
+                if t_now.minute == 50 and 0 <= t_now.second <= 60: 
                     get_stock_balance('ALL')
                     time.sleep(5)
             if t_sell < t_now < t_exit:  # PM 03:15 ~ PM 03:20 : 일괄 매도
