@@ -4,10 +4,11 @@ import pandas as pd
 from datetime import datetime
 import time, calendar
 import requests
+import json
  
 def post_message(token, channel, text):
     response = requests.post("https://slack.com/api/chat.postMessage",
-        headers={"Authorization": "Bearer "+token},
+        headers={"Authorization": "Bearer "+ token},
         data={"channel": channel,"text": text}
     )
     print(response)
@@ -49,6 +50,17 @@ def check_creon_system():
         printlog('check_creon_system() : init trade -> FAILED')
         return False
     return True
+
+def read_auth():
+    #>> 파일명 얻기
+    filename = "slack_token.json"
+    
+    # >> 파일읽기
+    with open(filename, "r") as fp:
+        authToken = json.load(fp)
+        
+    # >> auth key return
+    return authToken['myToken']
 
 def get_current_price(code):
     """인자로 받은 종목의 현재가, 매도호가, 매수호가를 반환한다."""
@@ -250,9 +262,18 @@ def sell_all():
 
 if __name__ == '__main__': 
     try:
-        myToken = "xoxb-3317909669731-3311300755430-18hEXSpx3BRGwMKRtwzqR1Sr"
-        #콤텍, 삼성중공업, 비비안, TYM, 모나미, 화성밸브, 신영스펙5, 성우전자, 휴비스, 한국주철관
-        symbol_list = ['A031820', 'A010140','A002070', 'A002900', 'A005360', 'A039610', 'A323280', 'A081580','A079980', 'A000970']
+        myToken = read_auth()
+        # A024950 삼천리자전거
+        # A105630 한세실업
+        # A036930 주성엔지니어링
+        # A122990 와이솔
+        # A046390 삼화네크웤스
+        # A053450 세코닉스
+        # A012450 한화에어로스페이스
+        # A323280 신영스펙5호
+        # A269420 KODEX S&P글로벌인프라
+        # A102370 케이옥션
+        symbol_list = ['A024950', 'A105630','A036930', 'A122990', 'A046390', 'A053450', 'A012450', 'A323280','A269420', 'A102370']
         bought_list = []     # 매수 완료된 종목 리스트
         target_buy_count = 10 # 매수할 종목 수
         buy_percent = 0.1   
